@@ -1,0 +1,58 @@
+CELERYD_NODES="w1 w2"
+
+CELERY_APP="SITE"
+APP_QUEUE="SITE_QUEUE"
+
+# Where to chdir at start.
+CELERYD_CHDIR="/path/to/site/manage.py"
+
+# Python interpreter from environment.
+#ENV_PYTHON="$CELERYD_CHDIR/env/bin/python"
+ENV_PYTHON="/usr/bin/python2.7"
+
+# How to call "manage.py celeryd_multi"
+CELERYD_MULTI="celery multi"
+
+# How to call "manage.py celeryctl"
+CELERYCTL="celeryctl"
+
+# Extra arguments to celeryd
+# Longest task: 10 hrs (as of writing this, the UpdateQuanitites task takes 5.5 hrs)
+CELERYD_OPTS="-Q:w1 $APP_QUEUE -c:w1 4 -Q:w2 celery -c:w2 1 --time-limit=36000 -E"
+
+# Name of the celery config module.
+CELERY_CONFIG_MODULE="celery"
+
+# %n will be replaced with the nodename.
+CELERYD_LOG_FILE="/var/log/celery/celeryd.log"
+CELERYD_PID_FILE="/var/run/celery/%n.pid"
+
+# Name of the projects settings module.
+export DJANGO_SETTINGS_MODULE="SITE.settings"
+
+# celerycam configuration
+#CELERYEV_CAM="djcelery.snapshot.Camera"
+#CELERYEV="$ENV_PYTHON $CELERYD_CHDIR/manage.py celerycam"
+#CELERYEV_LOG_FILE="/var/log/celery/celerycam.log"
+
+# Where to chdir at start.
+#CELERYBEAT_CHDIR="/home/peedee/projects/cottonon/cottonon"
+
+# Path to celerybeat
+#CELERYBEAT="$ENV_PYTHON $CELERYBEAT_CHDIR/manage.py celerybeat"
+
+# Extra arguments to celerybeat.  This is a file that will get
+# created for scheduled tasks.  It's generated automatically
+# when Celerybeat starts.
+#CELERYBEAT_OPTS="--schedule=/var/run/celerybeat-schedule"
+
+# Log level. Can be one of DEBUG, INFO, WARNING, ERROR or CRITICAL.
+CELERYBEAT_LOG_LEVEL="INFO"
+
+# Log file locations
+#CELERYBEAT_LOGFILE="/var/log/celerybeat.log"
+#CELERYBEAT_PIDFILE="/var/run/celerybeat.pid"
+CELERYD_USER="ubuntu"
+CELERYD_GROUP="ubuntu"
+CELERY_CREATE_DIRS=1
+
